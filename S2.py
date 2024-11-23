@@ -18,7 +18,8 @@ import numpy as np
 import OttoCycle as oc 
 from scipy.optimize import curve_fit
 import os
-os.system('cls')
+current_directory = os.path.dirname(os.path.realpath(__file__))
+output = current_directory+"\\Figures\\S2\\"
 
 #-----------------------------------------------------------------------------#
 
@@ -117,14 +118,14 @@ for z in [1, 2, 3]:  # Diferentes valores de xb
     plt.xlabel("Ângulo do Virabrequim (Radianos)")
     plt.ylabel("Fração Mássica Queimada (xb)")
     plt.title(f"Função de Wiebe para xb{z}")
-    plt.show()
+    plt.savefig(output+f"fwiebexb{z}.png")
 
     # Plotando o gráfico de xb em funcção do CAD experimental, para comparação
     plt.plot(theta, xb)
     plt.xlabel("Ângulo do Virabrequim (Radianos)")
     plt.ylabel("Fração Mássica Queimada (xb)")
     plt.title(f"Curva da fração mássica experimental do caso {z}")
-    plt.show()
+    plt.savefig(output+f"fracaomassica{z}.png")
 
     # Calculando a derivada da função de Wiebe
     dx = np.gradient(theta_fit)
@@ -138,7 +139,7 @@ for z in [1, 2, 3]:  # Diferentes valores de xb
     plt.ylabel("Derivada de xb em relação a θ")
     plt.title(f"Derivada da Função de Wiebe para xb{z}")
     plt.legend()
-    plt.show()
+    plt.savefig(output+f"dwiebexb{z}.png")
 
     for i in [1]:  # Para S2, apenas o caso com rv=10 será simulado
         #-----------------------------------------------------------------------------#
@@ -197,17 +198,18 @@ for z in [1, 2, 3]:  # Diferentes valores de xb
 
         #-----------------------------------------------------------------------------#
         # Simulação do Ciclo Otto
-        #-----------------------------------------------------------------------------#
+        #-----------------------------------------------------------------------------#a
         v1, m1, t1, p1 = oc.ottoCycle(Th, pars1)  # Executa a simulação do ciclo Otto
 
         plt.plot(Th, p1)
         plt.title(f"Pressão em função do ângulo do virabrequim no caso xb{z}")
         plt.xlabel('Ângulo do Virabrequim (Radianos)')
         plt.ylabel('Pressão [Pa]')
-        plt.show()
+        plt.savefig(output+f"fanglevirabrequimxb{z}.png")
+
 
         plt.plot(Th, t1)
         plt.title(f"Temperatura em função do ângulo do virabrequim no caso xb{z}")
         plt.xlabel('Ângulo do Virabrequim (Radianos)')
         plt.ylabel('Temperatura [K]')
-        plt.show()
+        plt.savefig(output+f"Tfanglevirabrequimxb{z}.png")
